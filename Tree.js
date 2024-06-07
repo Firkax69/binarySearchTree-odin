@@ -58,7 +58,24 @@ class Tree {
     return node;
   }
 
-
+  levelOrder(callback) {
+    if (!this.root) return [];
+    const queue = [this.root];
+    const results = [];
+    while (queue.length) {
+      let level = [];
+      let size = queue.length;
+      for (let i = 0; i < size; i++) {
+        const node = queue.shift();
+        level.push(node.key);
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+        if (callback) callback(node);
+      }
+      results.push(level);
+    }
+    if (!callback) return results;
+  }
 
   // END
 }
