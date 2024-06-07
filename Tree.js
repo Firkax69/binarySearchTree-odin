@@ -77,6 +77,64 @@ class Tree {
     if (!callback) return results;
   }
 
+
+
+  /**
+ * 3 methods for depth-first traversal
+ * Stack: Last In, First Out
+ * Preorder and Postorder uses stack.
+ * Inorder uses iteration.
+ */
+
+  
+  
+  // root left right
+
+  preorder(callback) {
+    if (!this.root) return [];
+    const stack = [this.root];
+    const results = [];
+    while (stack.length) {
+      const node = stack.pop();
+      if (node.right) stack.push(node.right);
+      if (node.left) stack.push(node.left);
+      if (callback) callback(node);
+      results.push(node.key);
+    }
+
+    if (!callback) return results;
+  }
+
+  // left root right
+
+  inorder(node = this.root, callback, result = []) {
+    if (!this.root) return [];
+    if (node === null) return;
+    this.inorder(node.left, callback, result);
+    callback ? callback(node) : result.push(node.key);
+    this.inorder(node.right, callback, result);
+    if (result) return result;
+  }
+
+  // left right root
+  
+  postorder(callback) {
+    if (!this.root) return [];
+    const stack = [this.root];
+    const results = [];
+    while (stack.length) {
+      const node = stack.pop();
+      if (node.left) stack.push(node.left);
+      if (node.right) stack.push(node.right);
+      if (callback) callback(node);
+      results.push(node.key);
+    }
+    if (!callback) return results.reverse();
+  }
+
+
+
+
   // END
 }
 
